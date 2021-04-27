@@ -4,6 +4,7 @@ import android.bluetooth.*
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import java.nio.charset.StandardCharsets
@@ -12,6 +13,8 @@ import java.util.*
 class BleServerActivity : AppCompatActivity() {
 
   private val logTag: String = BleServerActivity::class.java.simpleName
+
+  private var notifiableText: String = ""
 
   private val gattServerCallback = object : BluetoothGattServerCallback() {
 
@@ -29,18 +32,15 @@ class BleServerActivity : AppCompatActivity() {
       characteristic: BluetoothGattCharacteristic
     ) {
       when {
-        BleServerProfile.PRIMARY_TEXT_VALUE == characteristic.uuid -> {
-          Log.i(logTag, "Read PRIMARY_TEXT_VALUE")
+        BleServerProfile.NOTIFIABLE_TEXT_VALUE == characteristic.uuid -> {
+          Log.i(logTag, "Read NOTIFIABLE_TEXT_VALUE")
           bleServer.sendResponse(
             device,
             requestId,
             BluetoothGatt.GATT_SUCCESS,
             0,
-            "some-value".toByteArray()
+            notifiableText.toByteArray(charset = Charsets.UTF_8),
           )
-        }
-        BleServerProfile.SECONDARY_TEXT_VALUE == characteristic.uuid -> {
-          Log.i(logTag, "Read SECONDARY_TEXT_VALUE")
         }
         else -> {
           Log.w(logTag, "Invalid Characteristic Read: " + characteristic.uuid)
@@ -143,6 +143,25 @@ class BleServerActivity : AppCompatActivity() {
       BleServerProfile.BLE_SERVICE,
       BleServerProfile.createService()
     )
+
+    listOf(
+      findViewById<Button>(R.id.firstNotifyValue),
+      findViewById<Button>(R.id.secondNotifyValue),
+      findViewById<Button>(R.id.thirdNotifyValue),
+    ).forEach { button ->
+      button.setOnClickListener {
+        notifiableText = button.text.toString()
+        if (bleServer.isServerStarted) {
+          bleServer.bluetoothGattServer
+            ?.getService(BleServerProfile.NOTIFIABLE_TEXT_VALUE)
+            ?.getCharacteristic(BleServerProfile.NOTIFIABLE_TEXT_VALUE)
+            ?.also { characteristic ->
+              characteristic.value = button.text.toString().toByteArray(charset = Charsets.UTF_8)
+              bleServer.notifyRegisteredDevices(characteristic)
+            }
+        }
+      }
+    }
   }
 
   override fun onDestroy() {

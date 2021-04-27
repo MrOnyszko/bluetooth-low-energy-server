@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
@@ -9,22 +8,87 @@
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <TextView
-        android:id="@+id/primaryText"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:textSize="24sp"
-        tools:text="primary" />
+        android:layout_marginBottom="24dp"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/secondaryText"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:text="@string/primaryTextHeader"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/primaryText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:text="@string/placeholder"
+            android:textSize="24sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:textSize="24sp"
-        tools:text="secondary" />
+        android:orientation="vertical">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:text="@string/secondaryTextHeader"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/secondaryText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:text="@string/placeholder"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="24dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="34dp"
+            android:text="@string/notifyHeader"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/firstNotifyValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/firstNotifyValue" />
+
+        <Button
+            android:id="@+id/secondNotifyValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/secondNotifyValue" />
+
+        <Button
+            android:id="@+id/thirdNotifyValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/thirdNotifyValue" />
+    </LinearLayout>
 </LinearLayout>
