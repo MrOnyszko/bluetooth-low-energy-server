@@ -21,6 +21,7 @@ class BleServerActivity : AppCompatActivity() {
     override fun onConnectionStateChange(device: BluetoothDevice, status: Int, newState: Int) {
       if (newState == BluetoothProfile.STATE_CONNECTED) {
         Log.i(logTag, "BluetoothDevice CONNECTED: $device")
+        bleServer.registeredDevices.add(device)
       } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
         Log.i(logTag, "BluetoothDevice DISCONNECTED: $device")
         bleServer.registeredDevices.remove(device)
@@ -153,7 +154,7 @@ class BleServerActivity : AppCompatActivity() {
         notifiableText = button.text.toString()
         if (bleServer.isServerStarted) {
           bleServer.bluetoothGattServer
-            ?.getService(BleServerProfile.NOTIFIABLE_TEXT_VALUE)
+            ?.getService(BleServerProfile.BLE_SERVICE)
             ?.getCharacteristic(BleServerProfile.NOTIFIABLE_TEXT_VALUE)
             ?.also { characteristic ->
               characteristic.value = button.text.toString().toByteArray(charset = Charsets.UTF_8)
